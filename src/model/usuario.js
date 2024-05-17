@@ -38,10 +38,7 @@ Usuario.belongsTo(Rol, {
 Usuario.belongsTo(Sexo, {
     foreignKey: 'sexo_id',
     targetId: 'id'
-}, {
-    tableName: 'usuario',
-    freezeTableName: true
-  });
+});
 
 
 export default Usuario

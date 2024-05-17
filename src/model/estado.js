@@ -11,10 +11,6 @@ const Estado = sequelize.define('estado', {
     nombre: {
         type: DataTypes.STRING(40)
     }
-}, {
-    // Especifica el nombre de la tabla sin pluralización automática
-    tableName: 'estado',
-    freezeTableName: true
-  })
+});
 
 export default Estado;

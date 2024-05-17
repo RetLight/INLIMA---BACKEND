@@ -11,10 +11,6 @@ const Municipalidad = sequelize.define('municipalidad', {
     nombre: {
         type: DataTypes.STRING(70)
     }
-}, {
-    // Especifica el nombre de la tabla sin pluralización automática
-    tableName: 'municipalidad',
-    freezeTableName: true
-  })
+})
 
 export default Municipalidad;

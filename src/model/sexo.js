@@ -11,10 +11,6 @@ const Sexo = sequelize.define('sexo', {
     nombre: {
         type: DataTypes.STRING(9)
     }
-}, {
-    // Especifica el nombre de la tabla sin pluralización automática
-    tableName: 'sexo',
-    freezeTableName: true
-  })
+})
 
 export default Sexo;

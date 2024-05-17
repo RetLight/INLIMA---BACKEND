@@ -11,10 +11,6 @@ const Rol = sequelize.define('rol', {
     nombre: {
         type: DataTypes.STRING(20)
     }
-}, {
-    // Especifica el nombre de la tabla sin pluralización automática
-    tableName: 'rol',
-    freezeTableName: true
-  })
+});
 
 export default Rol;

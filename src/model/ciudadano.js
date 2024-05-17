@@ -24,12 +24,9 @@ const Ciudadano = sequelize.define('ciudadano', {
     }
 })
 
-Usuario.belongsTo(Ciudadano, {
+Ciudadano.belongsTo(Usuario, {
     foreignKey: 'usuario_id',
     targetId: 'id'
-}, {
-    tableName: 'ciudadano',
-    freezeTableName: true
-  });
+});
 
 export default Ciudadano
