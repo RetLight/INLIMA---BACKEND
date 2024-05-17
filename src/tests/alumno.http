@@ -1,4 +1,4 @@
-GET http://localhost:3001/sexos
+GET http://localhost:3001/queja
 
 
 ######

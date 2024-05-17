@@ -14,7 +14,9 @@ async function main() {
 
         console.log('conexión exitosa!')
 
-        app.listen(3001, () => {
+        const port = process.env.PORT || 3001
+
+        app.listen(port, () => {
             console.log('Servidor iniciado. Escuchando en puerto 3001')
         })
 
