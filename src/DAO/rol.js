@@ -1,25 +1,25 @@
 import RepositoryBase from "../repository/base.js";
-import modelo from '../model/sexo.js'
+import modelo from '../model/rol.js'
 
-const sexoRepository = new RepositoryBase(modelo);
+const rolRepository = new RepositoryBase(modelo);
 
 const findAll = async (req,res) => {
 
-    const sexo = await sexoRepository.findAll();
+    const roles = await rolRepository.findAll();
 
-    return res.status(200).json(sexo);
+    return res.status(200).json(roles);
 
 }
 
 const create = async (req,res) => {
-    const result = await sexoRepository.create(req.body);
+    const result = await rolRepository.create(req.body);
 
     return res.status(200).json(result);
 }
 
 const findOne = async (req,res) => {
     const id = req.params.id;
-    const result = await sexoRepository.findOne(id);
+    const result = await rolRepository.findOne(id);
 
     if (result)
         return res.status(200).json(result);
@@ -29,7 +29,7 @@ const findOne = async (req,res) => {
 }
 
 const update = async (req,res) => {
-    const result = await sexoRepository.update(req.body);
+    const result = await rolRepository.update(req.body);
 
     if (result)
         return res.status(200).json(result);
@@ -40,7 +40,7 @@ const update = async (req,res) => {
 const remove = async (req,res) => {
     const id = req.params.id;
     
-    const result = await sexoRepository.remove(id);
+    const result = await rolRepository.remove(id);
 
     if (result)
         return res.status(200).json(result);
@@ -48,6 +48,6 @@ const remove = async (req,res) => {
         return res.status(500).json({ message: 'No encontrado.'})
 }
 
-const sexoController = { findAll, create, findOne, update, remove }
+const roLDAO = { findAll, create, findOne, update, remove }
 
-export default sexoController;
+export default rolDAO;

@@ -1,6 +1,6 @@
 import express from 'express'
 
-import controller from '../controllers/sexo.js'
+import controller from '../DAO/sexo.js'
 
 const routes = express.Router()
 

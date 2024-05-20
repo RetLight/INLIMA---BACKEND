@@ -1,6 +1,6 @@
 import express from 'express'
 
-import controller from '../controllers/queja.js'
+import controller from '../DAO/queja.js'
 
 const routes = express.Router()
 

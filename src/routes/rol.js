@@ -1,6 +1,6 @@
 import express from 'express'
 
-import controller from '../controllers/rol.js'
+import controller from '../DAO/rol.js'
 
 const routes = express.Router()
 

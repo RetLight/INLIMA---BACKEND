@@ -1,6 +1,6 @@
 import express from 'express'
 
-import controller from '../controllers/ciudadano.js'
+import controller from '../DAO/ciudadano.js'
 
 const routes = express.Router()
 

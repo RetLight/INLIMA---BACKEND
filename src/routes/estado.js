@@ -1,6 +1,6 @@
 import express from 'express'
 
-import controller from '../controllers/estado.js'
+import controller from '../DAO/estado.js'
 
 const routes = express.Router()
 
