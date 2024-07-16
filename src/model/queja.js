@@ -19,7 +19,7 @@ const Queja = sequelize.define('queja', {
         type: DataTypes.STRING(1500)
     },
     foto: {
-        type: DataTypes.STRING(500)
+        type: DataTypes.TEXT
     },
     ubicacion_descripcion: {
         type: DataTypes.STRING(150)
@@ -30,6 +30,9 @@ const Queja = sequelize.define('queja', {
     longitud: {
         type: DataTypes.FLOAT
     },
+    fecha: {
+        type: DataTypes.DATE
+    },
     estado_id: {
         type: DataTypes.INTEGER
     },
@@ -37,6 +40,12 @@ const Queja = sequelize.define('queja', {
         type: DataTypes.INTEGER
     },
     municipalidad_id: {
+        type: DataTypes.INTEGER
+    },
+    calificacion: {
+        type: DataTypes.INTEGER
+    },
+    prioridad: {
         type: DataTypes.INTEGER
     }
 })

@@ -11,17 +11,23 @@ const Usuario = sequelize.define('usuario', {
         autoIncrement: true,
         allowNull: false
     },
-    nombre: {
-        type: DataTypes.STRING(50)
-    },
     email: {
         type: DataTypes.STRING(50)
     },
     password: {
         type: DataTypes.STRING(100)
     },
+    nombre: {
+        type: DataTypes.STRING(50)
+    },
+    apellido_paterno: {
+        type: DataTypes.STRING(50)
+    },
+    apellido_materno: {
+        type: DataTypes.STRING(50)
+    },
     foto: {
-        type: DataTypes.STRING(500)
+        type: DataTypes.TEXT
     },
     rol_id: {
         type: DataTypes.INTEGER

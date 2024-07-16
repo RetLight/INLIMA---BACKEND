@@ -1,53 +1,33 @@
+// DAO/rol.js
 import RepositoryBase from "../repository/base.js";
-import modelo from '../model/rol.js'
+import modelo from '../model/rol.js';
 
 const rolRepository = new RepositoryBase(modelo);
 
 const findAll = async (req,res) => {
 
-    const roles = await rolRepository.findAll();
+    const rols = await rolRepository.findAll();
 
-    return res.status(200).json(roles);
-
-}
-
-const create = async (req,res) => {
-    const result = await rolRepository.create(req.body);
-
-    return res.status(200).json(result);
-}
-
-const findOne = async (req,res) => {
-    const id = req.params.id;
-    const result = await rolRepository.findOne(id);
-
-    if (result)
-        return res.status(200).json(result);
-    else
-        return res.status(500).json({ message: 'No encontrado.'})
+    return res.status(200).json(rols);
 
 }
 
-const update = async (req,res) => {
-    const result = await rolRepository.update(req.body);
+const create = async (data) => {
+    return await rolRepository.create(data);
+};
 
-    if (result)
-        return res.status(200).json(result);
-    else    
-        return res.status(500).json({ message: 'No encontrado.'})
-}
+const findOne = async (id) => {
+    return await rolRepository.findOne(id);
+};
 
-const remove = async (req,res) => {
-    const id = req.params.id;
-    
-    const result = await rolRepository.remove(id);
+const update = async (data) => {
+    return await rolRepository.update(data);
+};
 
-    if (result)
-        return res.status(200).json(result);
-    else    
-        return res.status(500).json({ message: 'No encontrado.'})
-}
+const remove = async (id) => {
+    return await rolRepository.remove(id);
+};
 
-const roLDAO = { findAll, create, findOne, update, remove }
+const rolDAO = { findAll, create, findOne, update, remove };
 
-export default rolDAO;
+export { rolDAO as default };

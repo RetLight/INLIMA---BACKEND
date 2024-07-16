@@ -1,53 +1,33 @@
+// DAO/sexo.js
 import RepositoryBase from "../repository/base.js";
-import modelo from '../model/sexo.js'
+import modelo from '../model/sexo.js';
 
 const sexoRepository = new RepositoryBase(modelo);
 
 const findAll = async (req,res) => {
 
-    const sexo = await sexoRepository.findAll();
+    const sexos = await Repository.findAll();
 
-    return res.status(200).json(sexo);
-
-}
-
-const create = async (req,res) => {
-    const result = await sexoRepository.create(req.body);
-
-    return res.status(200).json(result);
-}
-
-const findOne = async (req,res) => {
-    const id = req.params.id;
-    const result = await sexoRepository.findOne(id);
-
-    if (result)
-        return res.status(200).json(result);
-    else
-        return res.status(500).json({ message: 'No encontrado.'})
+    return res.status(200).json(sexos);
 
 }
 
-const update = async (req,res) => {
-    const result = await sexoRepository.update(req.body);
+const create = async (data) => {
+    return await sexoRepository.create(data);
+};
 
-    if (result)
-        return res.status(200).json(result);
-    else    
-        return res.status(500).json({ message: 'No encontrado.'})
-}
+const findOne = async (id) => {
+    return await sexoRepository.findOne(id);
+};
 
-const remove = async (req,res) => {
-    const id = req.params.id;
-    
-    const result = await sexoRepository.remove(id);
+const update = async (data) => {
+    return await sexoRepository.update(data);
+};
 
-    if (result)
-        return res.status(200).json(result);
-    else    
-        return res.status(500).json({ message: 'No encontrado.'})
-}
+const remove = async (id) => {
+    return await sexoRepository.remove(id);
+};
 
-const sexoDAO = { findAll, create, findOne, update, remove }
+const sexoDAO = { findAll, create, findOne, update, remove };
 
-export default sexoDAO;
+export { sexoDAO as default };

@@ -1,53 +1,29 @@
+// DAO/municipalidad.js
 import RepositoryBase from "../repository/base.js";
-import modelo from '../model/municipalidad.js'
+import modelo from '../model/municipalidad.js';
 
 const municipalidadRepository = new RepositoryBase(modelo);
 
-const findAll = async (req,res) => {
+const findAll = async () => {
+    return await municipalidadRepository.findAll();
+};
 
-    const municipalidades = await municipalidadRepository.findAll();
+const create = async (data) => {
+    return await municipalidadRepository.create(data);
+};
 
-    return res.status(200).json(municipalidades);
+const findOne = async (id) => {
+    return await municipalidadRepository.findOne(id);
+};
 
-}
+const update = async (data) => {
+    return await municipalidadRepository.update(data);
+};
 
-const create = async (req,res) => {
-    const result = await municipalidadRepository.create(req.body);
+const remove = async (id) => {
+    return await municipalidadRepository.remove(id);
+};
 
-    return res.status(200).json(result);
-}
+const municipalidadDAO = { findAll, create, findOne, update, remove };
 
-const findOne = async (req,res) => {
-    const id = req.params.id;
-    const result = await municipalidadRepository.findOne(id);
-
-    if (result)
-        return res.status(200).json(result);
-    else
-        return res.status(500).json({ message: 'No encontrado.'})
-
-}
-
-const update = async (req,res) => {
-    const result = await municipalidadRepository.update(req.body);
-
-    if (result)
-        return res.status(200).json(result);
-    else    
-        return res.status(500).json({ message: 'No encontrado.'})
-}
-
-const remove = async (req,res) => {
-    const id = req.params.id;
-    
-    const result = await municipalidadRepository.remove(id);
-
-    if (result)
-        return res.status(200).json(result);
-    else    
-        return res.status(500).json({ message: 'No encontrado.'})
-}
-
-const municipalidadDAO = { findAll, create, findOne, update, remove }
-
-export default municipalidadDAO;
+export { municipalidadDAO as default };

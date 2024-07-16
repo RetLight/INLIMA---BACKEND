@@ -1,5 +1,6 @@
+// DAO/estado.js
 import RepositoryBase from "../repository/base.js";
-import modelo from '../model/estado.js'
+import modelo from '../model/estado.js';
 
 const estadoRepository = new RepositoryBase(modelo);
 
@@ -11,43 +12,22 @@ const findAll = async (req,res) => {
 
 }
 
-const create = async (req,res) => {
-    const result = await estadoRepository.create(req.body);
+const create = async (data) => {
+    return await estadoRepository.create(data);
+};
 
-    return res.status(200).json(result);
-}
+const findOne = async (id) => {
+    return await estadoRepository.findOne(id);
+};
 
-const findOne = async (req,res) => {
-    const id = req.params.id;
-    const result = await estadoRepository.findOne(id);
+const update = async (data) => {
+    return await estadoRepository.update(data);
+};
 
-    if (result)
-        return res.status(200).json(result);
-    else
-        return res.status(500).json({ message: 'No encontrado.'})
+const remove = async (id) => {
+    return await estadoRepository.remove(id);
+};
 
-}
+const estadoDAO = { findAll, create, findOne, update, remove };
 
-const update = async (req,res) => {
-    const result = await estadoRepository.update(req.body);
-
-    if (result)
-        return res.status(200).json(result);
-    else    
-        return res.status(500).json({ message: 'No encontrado.'})
-}
-
-const remove = async (req,res) => {
-    const id = req.params.id;
-    
-    const result = await estadoRepository.remove(id);
-
-    if (result)
-        return res.status(200).json(result);
-    else    
-        return res.status(500).json({ message: 'No encontrado.'})
-}
-
-const estadoDAO = { findAll, create, findOne, update, remove }
-
-export default estadoDAO;
+export { estadoDAO as default };

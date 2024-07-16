@@ -3,9 +3,9 @@ class RepositoryBase {
         this.modelo = modelo;
     }
 
-    findAll = async () => {
+    findAll = async (props = {}) => {
         try {
-            const result = await this.modelo.findAll();
+            const result = await this.modelo.findAll(props);
             return result;
         } catch(err) {
             console.error(err);
@@ -36,24 +36,22 @@ class RepositoryBase {
         }
     }
 
-    update =  async(object) => {
-        const { id } = object;
+    update = async (object) => {
+        const { id, ...data } = object.dataValues;
         try {
-            const result = await this.modelo.update({ where: { id } })
-    
-            if (result) {
-                result.set(object)
-                result.save()
+            const record = await this.modelo.findOne({ where: { id } });
+
+            if (!record) {
+                return null;
             }
-    
-            return result;
-                
-        }
-        catch(err) {
-            console.error(err);
+            Object.assign(record, data);
+            await record.save();
+            return record;
+
+        } catch (err) {
+            console.error('Error al actualizar la queja:', err);
             return null;
         }
-        
     }
 
     remove = async (id) => {

@@ -1,16 +1,53 @@
-import usuarioDAO from '../DAO/usuario.js';
+import RepositoryBase from "../repository/base.js";
+import modelo from '../model/usuario.js'
 
-/* PSEUDOCODIGO PARA TENER REFERENCIA DE LO QUE SE QUIERE
-public boolean iniciarsesion(String correo, String usuario){
+const Repository = new RepositoryBase(modelo);
 
-    bool entrarSesion = false;
-    bool usuarioEncontrado= "[traer todos lo usuario y preguntar si es que encuentra el parametro correo]";
+const findAll = async (req,res) => {
 
-    if(usuarioEncontrado != true){
-        dlkds
+    const alumnos = await Repository.findAll();
 
-    }
-    return entrarSesion;
+    return res.status(200).json(alumnos);
 
 }
-*/
+
+const create = async (req,res) => {
+    const result = await Repository.create(req.body);
+
+    return res.status(200).json(result);
+}
+
+const findOne = async (req,res) => {
+    const id = req.params.id;
+    const result = await Repository.findOne(id);
+
+    if (result)
+        return res.status(200).json(result);
+    else
+        return res.status(500).json({ message: 'No encontrado.'})
+
+}
+
+const update = async (req,res) => {
+    const result = await Repository.update(req.body);
+
+    if (result)
+        return res.status(200).json(result);
+    else    
+        return res.status(500).json({ message: 'No encontrado.'})
+}
+
+const remove = async (req,res) => {
+    const id = req.params.id;
+    
+    const result = await Repository.remove(id);
+
+    if (result)
+        return res.status(200).json(result);
+    else    
+        return res.status(500).json({ message: 'No encontrado.'})
+}
+
+const usuarioController = { findAll, create, findOne, update, remove }
+
+export default usuarioController;

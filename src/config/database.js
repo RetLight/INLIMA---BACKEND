@@ -1,8 +1,9 @@
 import Sequelize from 'sequelize'
 
-const hostname = 'inlima.postgres.database.azure.com'
+//const hostname = 'inlima-db.postgres.database.azure.com'
+const hostname = 'inlima--db.postgres.database.azure.com'
 const username = 'postgre'
-const password = 'Password1234'
+const password = 'Password1234'//56
 const database = 'inlima'
 const dbPort = 5432
 const dialect = 'postgres'
@@ -20,7 +21,7 @@ const sequelize = new Sequelize(database, username, password, {
     },
     pool: {
         max: 100,
-        min: 0,
+        min:0,
         acquire: 20000,
         idle: 5000
     },
@@ -28,6 +29,6 @@ const sequelize = new Sequelize(database, username, password, {
         freezeTableName: true,
         timestamps: false
     }
-});
+})
 
 export default sequelize;

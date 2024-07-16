@@ -1,53 +1,53 @@
+// DAO/ciudadano.js
 import RepositoryBase from "../repository/base.js";
-import modelo from '../model/ciudadano.js'
+import modelo from '../model/ciudadano.js';
 
 const ciudadanoRepository = new RepositoryBase(modelo);
 
-const findAll = async (req,res) => {
+const findAll = async () => {
+    return await ciudadanoRepository.findAll();
+};
 
-    const ciudadanos = await ciudadanoRepository.findAll();
+const findAllbyID = async (id) => {
+    try {
+        return await modelo.findAll({
+            where: { id }
+        })
+    }
+    catch(err) {
+        console.error(err);
+        return null;
+    }
+};
 
-    return res.status(200).json(ciudadanos);
+const create = async (data) => {
+    return await ciudadanoRepository.create(data);
+};
 
+const findOne = async (id) => {
+    return await ciudadanoRepository.findOne(id);
+};
+
+const findOneByUserID = async (usuario_id) => {
+    try {
+        return await modelo.findOne({
+            where: { usuario_id }
+        });
+    }
+    catch(err) {
+        console.error(err);
+        return null;
+    }
 }
 
-const create = async (req,res) => {
-    const result = await ciudadanoRepository.create(req.body);
+const update = async (data) => {
+    return await ciudadanoRepository.update(data);
+};
 
-    return res.status(200).json(result);
-}
+const remove = async (id) => {
+    return await ciudadanoRepository.remove(id);
+};
 
-const findOne = async (req,res) => {
-    const id = req.params.id;
-    const result = await ciudadanoRepository.findOne(id);
+const ciudadanoDAO = { findAll, findAllbyID, create, findOne, findOneByUserID, update, remove };
 
-    if (result)
-        return res.status(200).json(result);
-    else
-        return res.status(500).json({ message: 'No encontrado.'})
-
-}
-
-const update = async (req,res) => {
-    const result = await ciudadanoRepository.update(req.body);
-
-    if (result)
-        return res.status(200).json(result);
-    else    
-        return res.status(500).json({ message: 'No encontrado.'})
-}
-
-const remove = async (req,res) => {
-    const id = req.params.id;
-    
-    const result = await ciudadanoRepository.remove(id);
-
-    if (result)
-        return res.status(200).json(result);
-    else    
-        return res.status(500).json({ message: 'No encontrado.'})
-}
-
-const ciudadanoDAO = { findAll, create, findOne, update, remove }
-
-export default ciudadanoDAO;
+export { ciudadanoDAO as default };

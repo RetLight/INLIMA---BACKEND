@@ -1,53 +1,67 @@
+// DAO/usuario.js
 import RepositoryBase from "../repository/base.js";
-import modelo from '../model/usuario.js'
+import modelo from '../model/usuario.js';
 
 const usuarioRepository = new RepositoryBase(modelo);
 
-const findAll = async (req,res) => {
+const findAll = async () => {
+    return await usuarioRepository.findAll();
+};
 
-    const usuarios = await usuarioRepository.findAll();
+const create = async (data) => {
+    return await usuarioRepository.create(data);
+};
 
-    return res.status(200).json(usuarios);
+const findOne = async (id) => {
+    return await usuarioRepository.findOne(id);
+};
 
-}
+const findOneByEmail = async (email) => {
+    return await modelo.findOne({
+        where: { email }
+    })
+};
 
-const create = async (req,res) => {
-    const result = await usuarioRepository.create(req.body);
+const update = async (data) => {
+    return await usuarioRepository.update(data);
+};
 
-    return res.status(200).json(result);
-}
+const remove = async (id) => {
+    return await usuarioRepository.remove(id);
+};
 
-const findOne = async (req,res) => {
-    const id = req.params.id;
-    const result = await usuarioRepository.findOne(id);
 
-    if (result)
-        return res.status(200).json(result);
-    else
-        return res.status(500).json({ message: 'No encontrado.'})
+const updatePerfil = async (id, contraseña, imagen) => {
+    try {
+        const user = await findOne(id);
+        if (!user) {
+            throw new Error('User no encontrada.');
+        }
+        user.id = id;
+        user.password = contraseña;
+        user.foto = imagen;
+        await user.save();
+        return user;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+};
 
-}
+const resetPassword = async (id, contraseña) => {
+    try {
+        const user = await findOne(id);
+        if (!user) {
+            throw new Error('User no encontrada.');
+        }
+        user.id = id;
+        user.password = contraseña;
+        await user.save();
+        return user;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+};
 
-const update = async (req,res) => {
-    const result = await usuarioRepository.update(req.body);
+const usuarioDAO = { findAll, create, findOne, update, remove, findOneByEmail, updatePerfil, resetPassword };
 
-    if (result)
-        return res.status(200).json(result);
-    else    
-        return res.status(500).json({ message: 'No encontrado.'})
-}
-
-const remove = async (req,res) => {
-    const id = req.params.id;
-    
-    const result = await usuarioRepository.remove(id);
-
-    if (result)
-        return res.status(200).json(result);
-    else    
-        return res.status(500).json({ message: 'No encontrado.'})
-}
-
-const usuarioDAO = { findAll, create, findOne, update, remove }
-
-export default usuarioDAO;
+export { usuarioDAO as default };

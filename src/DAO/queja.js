@@ -1,53 +1,110 @@
+// DAO/queja.js
 import RepositoryBase from "../repository/base.js";
-import modelo from '../model/queja.js'
+import modelo from '../model/queja.js';
+import Ciudadano from '../model/ciudadano.js'
+import Municipalidad from '../model/municipalidad.js'
+import Estado from '../model/estado.js'
 
 const quejaRepository = new RepositoryBase(modelo);
 
-const findAll = async (req,res) => {
+const findAll = async () => {
+    return await quejaRepository.findAll();
+};
 
-    const quejas = await quejaRepository.findAll();
+const findAllbyCiudadanoID = async (ciudadano_id) => {
+    try {
+        return await modelo.findAll({
+            where: { ciudadano_id },
+            include: [
+                { model: Estado},
+                { model: Ciudadano, attributes: ['dni'] },
+                { model: Municipalidad},
+            ]
+        })
+    }
+    catch(err) {
+        //console.error(err);
+        return null;
+    }
+};
 
-    return res.status(200).json(quejas);
+const create = async (data) => {
+    return await quejaRepository.create(data);
+};
 
-}
+const findOne = async (id) => {
+    return await quejaRepository.findOne(id);
+};
 
-const create = async (req,res) => {
-    const result = await quejaRepository.create(req.body);
+const update = async (data) => {
+    return await quejaRepository.update(data);
+};
 
-    return res.status(200).json(result);
-}
+const remove = async (id) => {
+    return await quejaRepository.remove(id);
+};
 
-const findOne = async (req,res) => {
-    const id = req.params.id;
-    const result = await quejaRepository.findOne(id);
+const findFiltered = async (whereConditions) => {
+    try{
+        return await modelo.findAll({
+            where: whereConditions,
+            include: [
+                { model: Estado },
+                { model: Ciudadano },
+                { model: Municipalidad },
+            ]
+        });
+    }catch (err) {
+        //console.error(err);
+        return null;
+    }
+};
 
-    if (result)
-        return res.status(200).json(result);
-    else
-        return res.status(500).json({ message: 'No encontrado.'})
+const findOneByCiudadanoId = async (id) => {
+    try {
+        return await modelo.findOne({
+            where: { id },
+            include: [
+                { model: Estado, attributes: ['nombre'] },
+                { model: Ciudadano, attributes: ['dni'] },
+                { model: Municipalidad, attributes: ['nombre'] },
+            ]
+        });
+    } catch (err) {
+        //console.error(err);
+        return null;
+    }
+};
 
-}
+const updateEstado = async (id, estado_id) => {
+    try {
+        const queja = await findOne(id);
+        if (!queja) {
+            throw new Error('Queja no encontrada.');
+        }
+        queja.estado_id = estado_id;
+        await queja.save();
+        return queja;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+};
 
-const update = async (req,res) => {
-    const result = await quejaRepository.update(req.body);
+const updatePrioridad = async (id, prioridad_id) => {
+    try {
+        const queja = await findOne(id);
+        if (!queja) {
+            throw new Error('Queja no encontrada.');
+        }
+        console.log(prioridad_id)
+        queja.prioridad = prioridad_id;
+        await queja.save();
+        return queja;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+};
 
-    if (result)
-        return res.status(200).json(result);
-    else    
-        return res.status(500).json({ message: 'No encontrado.'})
-}
+const quejaDAO = { findAll, findAllbyCiudadanoID, create, findOne, update, remove , findFiltered, findOneByCiudadanoId, updateEstado, updatePrioridad};
 
-const remove = async (req,res) => {
-    const id = req.params.id;
-    
-    const result = await quejaRepository.remove(id);
-
-    if (result)
-        return res.status(200).json(result);
-    else    
-        return res.status(500).json({ message: 'No encontrado.'})
-}
-
-const quejaDAO = { findAll, create, findOne, update, remove }
-
-export default quejaDAO;
+export { quejaDAO as default };

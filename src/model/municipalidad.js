@@ -11,6 +11,6 @@ const Municipalidad = sequelize.define('municipalidad', {
     nombre: {
         type: DataTypes.STRING(70)
     }
-})
+});
 
 export default Municipalidad;

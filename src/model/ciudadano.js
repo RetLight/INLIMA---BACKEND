@@ -13,14 +13,14 @@ const Ciudadano = sequelize.define('ciudadano', {
     dni: {
         type: DataTypes.STRING(15)
     },
-    apellido_paterno: {
-        type: DataTypes.STRING(50)
-    },
-    apellido_materno: {
-        type: DataTypes.STRING(50)
+    numero: {
+        type: DataTypes.STRING(15)
     },
     usuario_id: {
         type: DataTypes.INTEGER
+    },
+    reputacion: {
+        type: DataTypes.FLOAT
     }
 })
 
